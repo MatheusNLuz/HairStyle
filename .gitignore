@@ -24,6 +24,14 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+### TESTES ###
+src/Controller/TesteController.php
+src/Controller/EmailTestController.php
+templates/teste.html.twig
+
+### DIF ###
+diferencas.sql
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/

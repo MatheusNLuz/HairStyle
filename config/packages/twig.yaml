@@ -1,5 +1,9 @@
+# config/packages/twig.yaml
 twig:
-    file_name_pattern: '*.twig'
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        current_user: '@App\Twig\GlobalVariables'
+
 
 when@test:
     twig:

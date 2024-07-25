@@ -6,7 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ORM\Table(name: 'cliente', schema: 'salao')]
+#[ORM\Table(name: 'cliente', schema: 'hair_style')]
 class Client
 {
     #[ORM\Id]
@@ -22,6 +22,9 @@ class Client
 
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
+
+    #[ORM\ManyToOne(inversedBy: 'client')]
+    private ?Schedule $schedule = null;
 
     public function getId(): ?int
     {
@@ -60,6 +63,18 @@ class Client
     public function setPhone(string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getSchedule(): ?Schedule
+    {
+        return $this->schedule;
+    }
+
+    public function setSchedule(?Schedule $schedule): static
+    {
+        $this->schedule = $schedule;
 
         return $this;
     }

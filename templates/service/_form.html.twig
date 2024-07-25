@@ -1,0 +1,51 @@
+
+{{ form_start(form) }}
+
+<div class="flex items-center justify-center mt-12">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <!-- Service Form -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Cadastro de Serviço</h1>
+                {% if form_errors(form) %}
+                    <div class="p-4 mb-4 text-red-600 bg-red-100 border border-red-300 rounded">
+                        {% for error in form_errors(form) %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="relative">
+                    {{ form_label(form.name, 'Nome do serviço', { 'attr': { 'class': 'block text-gray-700 font-medium' } }) }}
+                    {{ form_widget(form.name, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out' } }) }}
+                    {{ form_errors(form.name) }}
+                </div>
+
+                <div class="relative">
+                    {{ form_label(form.price, 'Preço do serviço', { 'attr': { 'class': 'block text-gray-700 font-medium' } }) }}
+                    {{ form_widget(form.price, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out' } }) }}
+                    {{ form_errors(form.price) }}
+                </div>
+
+                <div class="relative">
+                    {{ form_label(form.category, 'Categoria do serviço', { 'attr': { 'class': 'block text-gray-700 font-medium' } }) }}
+                    {{ form_widget(form.category, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out' } }) }}
+                    {{ form_errors(form.category) }}
+                </div>
+
+                <div class="relative">
+                    {{ form_label(form.user, 'Nome do Profissional', { 'attr': { 'class': 'block text-gray-700 font-medium' } }) }}
+                    {{ form_widget(form.user, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out' } }) }}
+                    {{ form_errors(form.user) }}
+                </div>
+
+                <div class="flex items-center justify-between mt-8">
+                    <a href="{{ path('index') }}" class="bg-gray-200 px-4 py-2 rounded-md shadow-md text-gray-600 hover:bg-gray-300">Cancelar</a>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        Salvar Serviço
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

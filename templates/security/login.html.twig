@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block main %}
+    <div class="flex items-center justify-center mt-12">
+        <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+            <!-- Login Form -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Login</h1>
+
+                <form action="{{ path('app_login') }}" method="post" class="space-y-6">
+                    {% if error %}
+                        <div class="p-4 mb-4 text-red-600 bg-red-100 border border-red-300 rounded">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="relative">
+                        <label for="username" class="block text-gray-700 font-medium">Email</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" aria-label="Email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out" required autofocus />
+                    </div>
+
+                    <div class="relative">
+                        <label for="password" class="block text-gray-700 font-medium">Senha</label>
+                        <input type="password" id="password" name="_password" aria-label="Senha" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out" required />
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            Entrar
+                        </button>
+                        <a href="#" class="text-blue-500 hover:text-blue-700 text-sm">Esqueceu a senha?</a>
+                    </div>
+                    <div class="checkbox mb-3">
+                        <input type="checkbox" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">Lembrar-me</label>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </form>
+            </div>
+
+            <!-- Registration Link -->
+            <div class="text-center">
+                <p class="text-gray-600">Não tem uma conta?</p>
+                <a href="{{ path('register') }}" class="text-blue-500 hover:text-blue-700 font-semibold">Cadastre-se</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

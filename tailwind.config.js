@@ -2,7 +2,8 @@
 module.exports = {
   content: [
       "./assets/**/*.js",
-      "./templates/**/*.html.twig"
+      "./templates/**/*.html.twig",
+      "node_modules/preline/dist/*.js"
   ],
   theme: {
     extend: {
@@ -11,6 +12,8 @@ module.exports = {
         }
     },
   },
-  plugins: [],
+  plugins: [
+      require('preline/plugin'),
+  ],
 }
 

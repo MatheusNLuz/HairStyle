@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
+#[ORM\Table(name: 'service', schema: 'hair_style')]
 class Service
 {
     #[ORM\Id]
@@ -21,22 +22,23 @@ class Service
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private ?string $category = null;
+
     /**
      * @var Collection<int, Schedule>
      */
     #[ORM\OneToMany(targetEntity: Schedule::class, mappedBy: 'service')]
     private Collection $schedules;
 
-    /**
-     * @var Collection<int, Administrator>
-     */
-    #[ORM\ManyToMany(targetEntity: Administrator::class, mappedBy: 'service')]
-    private Collection $administrators;
+    #[ORM\ManyToOne(inversedBy: 'services')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
 
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
-        $this->administrators = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,29 +100,24 @@ class Service
         return $this;
     }
 
-    /**
-     * @return Collection<int, Administrator>
-     */
-    public function getAdministrators(): Collection
+    public function getCategory(): ?string
     {
-        return $this->administrators;
+        return $this->category;
     }
 
-    public function addAdministrator(Administrator $administrator): static
+    public function setCategory(?string $category): void
     {
-        if (!$this->administrators->contains($administrator)) {
-            $this->administrators->add($administrator);
-            $administrator->addService($this);
-        }
-
-        return $this;
+        $this->category = $category;
     }
 
-    public function removeAdministrator(Administrator $administrator): static
+    public function getUser(): ?User
     {
-        if ($this->administrators->removeElement($administrator)) {
-            $administrator->removeService($this);
-        }
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadastro{% endblock %}
+
+{% block main %}
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Cadastro</h1>
+
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="p-4 mb-4 text-red-600 bg-red-100 border border-red-300 rounded">
+                    {{ flash_error }}
+                </div>
+            {% endfor %}
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm, {'attr': {'class': 'space-y-6'}}) }}
+
+            <div class="relative">
+                {{ form_row(registrationForm.name, {
+                    'attr': {
+                        'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out'
+                    }
+                }) }}
+            </div>
+
+            <div class="relative">
+                {{ form_row(registrationForm.category, {
+                    'attr': {
+                        'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out'
+                    }
+                }) }}
+            </div>
+
+            <div class="relative">
+                {{ form_row(registrationForm.email, {
+                    'attr': {
+                        'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out'
+                    }
+                }) }}
+            </div>
+
+            <div class="relative">
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Senha',
+                    'attr': {
+                        'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out',
+                        'autocomplete': 'new-password'
+                    }
+                }) }}
+            </div>
+
+            <div class="flex items-center gap-2">
+                {{ form_label(registrationForm.agreeTerms) }}
+                {{ form_widget(registrationForm.agreeTerms) }}
+            </div>
+
+            <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                Registrar
+            </button>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}
+
