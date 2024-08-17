@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -23,8 +25,16 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
 
-    #[ORM\ManyToOne(inversedBy: 'client')]
-    private ?Schedule $schedule = null;
+    /**
+     * @var Collection<int, Schedule>
+     */
+    #[ORM\OneToMany(targetEntity: Schedule::class, mappedBy: 'client')]
+    private Collection $schedules;
+
+    public function __construct()
+    {
+        $this->schedules = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -67,14 +77,32 @@ class Client
         return $this;
     }
 
-    public function getSchedule(): ?Schedule
+    /**
+     * @return Collection<int, Schedule>
+     */
+    public function getSchedules(): Collection
     {
-        return $this->schedule;
+        return $this->schedules;
     }
 
-    public function setSchedule(?Schedule $schedule): static
+    public function addSchedule(Schedule $schedule): static
     {
-        $this->schedule = $schedule;
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules->add($schedule);
+            $schedule->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedule(Schedule $schedule): static
+    {
+        if ($this->schedules->removeElement($schedule)) {
+            // set the owning side to null (unless already changed)
+            if ($schedule->getClient() === $this) {
+                $schedule->setClient(null);
+            }
+        }
 
         return $this;
     }

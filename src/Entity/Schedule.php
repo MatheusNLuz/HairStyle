@@ -17,22 +17,18 @@ class Schedule
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateAndHour = null;
-
     #[ORM\ManyToOne(inversedBy: 'schedules')]
     private ?Service $service = null;
 
-    /**
-     * @var Collection<int, Client>
-     */
-    #[ORM\OneToMany(targetEntity: Client::class, mappedBy: 'schedule')]
-    private Collection $client;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
-    public function __construct()
-    {
-        $this->client = new ArrayCollection();
-    }
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $hour = null;
+
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'schedules')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $client = null;
 
     public function getId(): ?int
     {
@@ -44,40 +40,46 @@ class Schedule
         return $this->service;
     }
 
-    public function setService(?Service $service): static
+    public function setService(?Service $service): void
     {
         $this->service = $service;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Client>
-     */
-    public function getClient(): Collection
+    public function getHour(): ?\DateTimeInterface
+    {
+        return $this->hour;
+    }
+
+    public function setHour(\DateTimeInterface $hour): static
+    {
+        $this->hour = $hour;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
     {
         return $this->client;
     }
 
-    public function addClient(Client $client): static
+    public function setClient(?Client $client): static
     {
-        if (!$this->client->contains($client)) {
-            $this->client->add($client);
-            $client->setSchedule($this);
-        }
+        $this->client = $client;
 
         return $this;
     }
 
-    public function removeClient(Client $client): static
-    {
-        if ($this->client->removeElement($client)) {
-            // set the owning side to null (unless already changed)
-            if ($client->getSchedule() === $this) {
-                $client->setSchedule(null);
-            }
-        }
 
-        return $this;
-    }
 }

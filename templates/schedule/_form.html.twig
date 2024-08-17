@@ -1,0 +1,47 @@
+
+{{ form_start(form) }}
+
+<div class="flex items-center justify-center mt-12">
+    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <!-- Service Form -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Relaziar agendamento</h1>
+            {% if form_errors(form) %}
+                <div class="p-4 mb-4 text-red-600 bg-red-100 border border-red-300 rounded">
+                    {% for error in form_errors(form) %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="relative my-4 ">
+                {{ form_row(form.client) }}
+                {{ form_errors(form.client) }}
+            </div>
+
+            <div class="relative my-4">
+                {{ form_row(form.service) }}
+                {{ form_errors(form.service) }}
+            </div>
+
+            <div class="relative my-4">
+                {{ form_row(form.date) }}
+                {{ form_errors(form.date) }}
+            </div>
+
+            <div class="relative my-4">
+                {{ form_row(form.hour) }}
+                {{ form_errors(form.hour) }}
+            </div>
+
+            <div class="flex items-center justify-between mt-8">
+                <a href="{{ path('index') }}" class="bg-gray-200 px-4 py-2 rounded-md shadow-md text-gray-600 hover:bg-gray-300">Cancelar</a>
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Salvar Serviço
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

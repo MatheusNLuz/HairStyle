@@ -18,10 +18,10 @@
     {% block header %}
         <header class="bg-primary shadow-md sticky top-0 z-50 w-full">
             <div class="container mx-auto flex justify-between items-center p-6">
-                <div class="text-3xl font-bold text-white">Stylos Black</div>
+                <a href="{{ path('index') }}" class="text-3xl font-bold text-white">Stylos Black</a>
                 <nav class="space-x-6">
-                    <a href="#" class="text-white hover:text-gray-400 font-medium">Inicio</a>
-                    <a href="#" class="text-white hover:text-gray-400 font-medium">Barbeiro</a>
+                    <a href="{{ path('index') }}" class="text-white hover:text-gray-400 font-medium">Inicio</a>
+                    <a href="{{ path('app_schedule_new') }}" class="text-white hover:text-gray-400 font-medium">Barbeiro</a>
                     <a href="#" class="text-white hover:text-gray-400 font-medium">Trancista</a>
                     <a href="#" class="text-white hover:text-gray-400 font-medium">Contato</a>
                     {% if is_granted('ROLE_USER') %}
@@ -33,15 +33,12 @@
 
                             <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-primary shadow-md rounded-lg p-1 space-y-0.5 mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-custom-trigger">
                                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
-                                    Perfil
-                                </a>
-                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
                                     Agenda
                                 </a>
                                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="{{ path('service_new') }}">
                                     Novo serviço
                                 </a>
-                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="#">
+                                <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="{{ path('service_index') }}">
                                     Listar serviços
                                 </a>
                                 <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100" href="{{ path('app_logout') }}">
@@ -63,12 +60,11 @@
             </div>
             <div class="hidden md:hidden" id="menu">
                 <nav class="p-4 bg-white shadow-lg">
-                    <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Inicio</a>
-                    <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Barbeiro</a>
+                    <a href="{{ path('index') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Inicio</a>
+                    <a href="{{ path('app_schedule_new') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Barbeiro</a>
                     <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Trancista</a>
                     <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Contato</a>
                     {% if is_granted('ROLE_USER') %}
-                        <a href="#" class="text-white hover:text-gray-400 font-medium">Perfil</a>
                         <a href="{{ path('app_logout') }}" class="text-white hover:text-gray-400 font-medium">Sair</a>
                     {% endif %}
                 </nav>

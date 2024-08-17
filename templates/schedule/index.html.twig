@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <div class="absolute top-0 end-0 mt-8 z-50">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <!-- Toast -->
+                <div id="dismiss-toast" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 max-w-xs {% if type == 'success' %} bg-green-500 {% elseif type == 'error' %} bg-red-500 {% endif %} rounded-xl shadow-lg" role="alert" tabindex="-1" aria-labelledby="hs-toast-dismiss-button-label hs-toast-placement-top-right-label">
+                    <div class="flex p-4">
+                        <p id="hs-toast-dismiss-button-label hs-toast-placement-top-right-label" class="text-sm text-white">
+                            {{ message }}
+                        </p>
+
+                        <div class="ms-auto">
+                            <button type="button" class="inline-flex shrink-0 justify-center items-center size-5 rounded-lg text-white opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100" aria-label="Close" data-hs-remove-element="#dismiss-toast">
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 6 6 18"></path>
+                                    <path d="m6 6 12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <h1 class="mt-8 text-center font-bold text-xl">Agenda do mês</h1>
+    <div class="flex flex-col items-center justify-center w-full h-[60vh]">
+
+        <div class="flex flex-col">
+            <div class="overflow-x-auto w-full"> <!-- Faz o contêiner ocupar 100% da largura -->
+                <div class="p-1.5 min-w-[50%] inline-block align-middle"> <!-- Define uma largura mínima de 50% -->
+                    <div class="border rounded-lg divide-y divide-gray-200">
+                        <div class="overflow-hidden max-h-[60vh] overflow-y-auto"> <!-- Rolagem vertical limitada -->
+                            <table class="min-w-full divide-y divide-gray-200"> <!-- Garante que a tabela ocupe 100% da largura disponível -->
+                                <thead class="bg-primary">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">Id</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">Data</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase">Hora</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-100 uppercase">Serviço</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-100 uppercase">Cliente</th>
+                                </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-600">
+                                {% for schedule in schedules %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ schedule.id }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ schedule.date ? schedule.date|date('d-m-Y') : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ schedule.hour ? schedule.hour|date('h:i') : '' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">{{ schedule.service.name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">{{ schedule.client.name }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+

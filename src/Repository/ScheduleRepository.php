@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Schedule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,9 +12,31 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ScheduleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Schedule::class);
+        $this->entityManager = $entityManager;
+    }
+
+    public function add(Schedule $schedule, bool $flush = true)
+    {
+        $existingSchedule = $this->findOneBy([
+           'date' => $schedule->getDate(),
+           'hour' => $schedule->getHour()
+        ]);
+
+        if($existingSchedule) {
+            return false;
+        }
+
+        $this->entityManager->persist($schedule);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+        return true;
     }
 
     //    /**
