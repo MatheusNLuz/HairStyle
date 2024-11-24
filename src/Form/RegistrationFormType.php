@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,9 +21,25 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nome',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor, coloque a senha',
+                    ]),
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Você deve colocar no minimo {{ limit }} caracteres',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 50,
+                    ]),
+                ],
             ])
-            ->add('category', TextType::class, [
-                'label' => 'Categoria'
+            ->add('category', ChoiceType::class, [
+                'label' => 'Categoria',
+                'choices' => [
+                    '--Selecione--' => 'Selecione',
+                    'Barbeiro' => 'Barbeiro',
+                    'Trancista' => 'Trancista',
+                ]
             ])
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [

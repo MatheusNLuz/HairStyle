@@ -20,9 +20,6 @@ class Service
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?float $price = null;
-
-    #[ORM\Column]
     private ?string $category = null;
 
     /**
@@ -34,6 +31,9 @@ class Service
     #[ORM\ManyToOne(inversedBy: 'services')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $price = null;
 
 
     public function __construct()
@@ -54,18 +54,6 @@ class Service
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -120,5 +108,15 @@ class Service
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): void
+    {
+        $this->price = $price;
     }
 }

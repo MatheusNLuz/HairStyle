@@ -22,7 +22,6 @@ class ServiceRepository extends ServiceEntityRepository
 
     public function add(Service $service, bool $flush = true)
     {
-
         $this->entityManager->persist($service);
 
         if ($flush) {

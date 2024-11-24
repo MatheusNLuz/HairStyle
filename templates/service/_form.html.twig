@@ -1,7 +1,7 @@
 
 {{ form_start(form) }}
 
-<div class="flex items-center justify-center mt-12">
+<div class="flex items-center justify-center my-12">
     <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <!-- Service Form -->
         <div class="mb-8">
@@ -22,7 +22,7 @@
 
                 <div class="relative">
                     {{ form_label(form.price, 'Preço do serviço', { 'attr': { 'class': 'block text-gray-700 font-medium' } }) }}
-                    {{ form_widget(form.price, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out' } }) }}
+                    {{ form_widget(form.price, { 'attr': { 'class': 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150 ease-in-out price' } }) }}
                     {{ form_errors(form.price) }}
                 </div>
 

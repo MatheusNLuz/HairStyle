@@ -7,7 +7,7 @@
         <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
             <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Cadastro</h1>
 
-            {% for flash_error in app.flashes('verify_email_error') %}
+            {% for flash_error in app.flashes('danger') %}
                 <div class="p-4 mb-4 text-red-600 bg-red-100 border border-red-300 rounded">
                     {{ flash_error }}
                 </div>

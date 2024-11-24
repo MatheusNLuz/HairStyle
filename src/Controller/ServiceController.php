@@ -33,7 +33,7 @@ class ServiceController extends AbstractController
 
             $serviceRepository->add($service);
             $this->addFlash("success", "Serviço criado com sucesso!");
-            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('service_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('service/new.html.twig', [
@@ -42,7 +42,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['POST'])]
     public function show(Service $service): Response
     {
         return $this->render('service/show.html.twig', [
@@ -68,7 +68,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->getPayload()->getString('_token'))) {
@@ -76,6 +76,6 @@ class ServiceController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('service_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -8,6 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ClientType extends AbstractType
 {
@@ -21,7 +24,18 @@ class ClientType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'block text-gray-700 font-medium'
-                ]
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor, preencha o nome',
+                    ]),
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Você deve colocar no minimo {{ limit }} caracteres',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 50,
+                    ]),
+                ],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Insira seu e-mail:',
@@ -30,7 +44,15 @@ class ClientType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'block text-gray-700 font-medium'
-                ]
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor, coloque a senha',
+                    ]),
+                    new Email([
+                        'message' => 'Por favor, insira seu e-mail',
+                    ]),
+                ],
             ])
             ->add('phone', TextType::class, [
                 'label' => 'Insira seu telefone:',
@@ -39,6 +61,11 @@ class ClientType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'block text-gray-700 font-medium'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Por favor, coloque seu telefone',
+                    ]),
                 ]
             ]);
     }

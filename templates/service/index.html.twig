@@ -31,9 +31,20 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ service.price }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">{{ service.category }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right flex gap-x-4">
-                                    <a href="{{ path('service_edit', {'id': service.id}) }}" title="Editar"><i class="fa-solid fa-pen-to-square text-primary"></i></a>
-                                    <a href="{{ path('service_delete', {'id': service.id}) }}" title="Deletar"><i class="fa-solid fa-trash text-primary"></i></a>
+                                    <!-- Link para editar -->
+                                    <a href="{{ path('service_edit', {'id': service.id}) }}" title="Editar">
+                                        <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                    </a>
+
+                                    <!-- Formulário de exclusão -->
+                                    <form action="{{ path('service_delete', {'id': service.id}) }}" method="post" style="display: inline;" onsubmit="return confirm('Tem certeza de que deseja excluir este serviço?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+                                        <button type="submit" title="Deletar" style="background: none; border: none;">
+                                            <i class="fa-solid fa-trash text-primary"></i>
+                                        </button>
+                                    </form>
                                 </td>
+
                             </tr>
                             {% endfor %}
                             </tbody>
