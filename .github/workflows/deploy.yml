@@ -1,0 +1,27 @@
+name: Deploy Symfony to Render
+
+on:
+  push:
+    branches:
+      - main  # Pode ser o nome da sua branch principal
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2.x'  # Escolha a versão do PHP que você usa no Symfony
+
+    - name: Install dependencies
+      run: |
+        composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Deploy to Render
+      run: |
+        curl -fsSL https://render.com/deploy/symfony | bash
