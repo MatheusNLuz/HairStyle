@@ -1,27 +1,47 @@
-name: Deploy Symfony to Render
+name: Deploy Symfony Project
 
 on:
   push:
     branches:
-      - main  # Pode ser o nome da sua branch principal
+      - main  # Ou o nome da sua branch principal
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # O ambiente Ubuntu que o GitHub Actions oferece
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Set up PHP
+    - name: Set up PHP 8.2
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2.x'  # Escolha a versão do PHP que você usa no Symfony
+        php-version: '8.2'  # Versão do PHP configurada para o Symfony
 
-    - name: Install dependencies
+    - name: Install Composer
       run: |
-        composer install --no-interaction --prefer-dist --optimize-autoloader
+        curl -sS https://getcomposer.org/installer | php
+        mv composer.phar /usr/local/bin/composer
 
-    - name: Deploy to Render
+    - name: Install Dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Warmup Symfony Cache
+      run: php bin/console cache:warmup --env=prod
+
+    - name: Set Up Deployment Keys (Caso necessário)
       run: |
-        curl -fsSL https://render.com/deploy/symfony | bash
+        mkdir -p ~/.ssh
+        echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H your.server.com >> ~/.ssh/known_hosts  # Substitua pelo seu servidor
+
+    - name: Deploy to Server (via SSH)
+      run: |
+        ssh -o StrictHostKeyChecking=no user@your.server.com << 'EOF'
+          cd /caminho/do/seu/projeto && git pull origin main
+          composer install --no-dev --optimize-autoloader
+          php bin/console doctrine:migrations:migrate --no-interaction --env=prod  # Rodar migrações do banco de dados
+          php bin/console cache:clear --env=prod
+          php bin/console assets:install --env=prod  # Instalar ativos (CSS, JS)
+        EOF
