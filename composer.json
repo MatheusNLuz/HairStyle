@@ -83,7 +83,7 @@
         "auto-scripts": {
             "cache:clear": "php bin/console cache:clear --env=prod --no-debug",
             "assets:install %PUBLIC_DIR%": "php bin/console assets:install --env=prod",
-            "importmap:install": "php bin/console importmap:install"  // Se você estiver usando importmaps
+            "importmap:install": "php bin/console importmap:install"
         },
         "post-install-cmd": [
             "@auto-scripts"
