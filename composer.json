@@ -78,11 +78,12 @@
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php81": "*"
     },
+    
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "cache:clear": "php bin/console cache:clear --env=prod --no-debug",
+            "assets:install %PUBLIC_DIR%": "php bin/console assets:install --env=prod",
+            "importmap:install": "php bin/console importmap:install"  // Se você estiver usando importmaps
         },
         "post-install-cmd": [
             "@auto-scripts"
